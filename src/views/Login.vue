@@ -47,24 +47,30 @@ const fetchData = async () => {
 					userPassword: userPassword.value
 				}
 			});
-			if (response.data.code === 0) {
-				ElMessage.success(response.data.msg);
+			const data = response.data;
+			if (data.code === 200) {
+				ElMessage.success(data.msg);
 				setTimeout(() => {
 					GlobalVar.username = userName.value;
-					router.push('/admin');
+					if (data.role === "admin") {
+						router.push('/admin');
+					} else {
+						router.push('/user');
+					}
 				}, 1000);
 			} else {
-				ElMessage.error(response.data.msg);
+				ElMessage.error(data.msg);
 			}
 		} catch (error) {
 			console.error(error);
+			ElMessage.error("请求失败，请稍后重试！");
 		}
 	} else {
-		ElMessage.error("账号或者密码错误!")
+		ElMessage.error("账号或者密码不能为空！");
 	}
-
 };
 </script>
+
 
 <style scoped>
 * {
