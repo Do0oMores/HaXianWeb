@@ -4,10 +4,10 @@
 			<div class="header">注册您的新账号</div>
 			<div class="form-wrapper">
 				<form @submit.prevent="fetchData">
-					<input type="text" v-model="username" placeholder="用户名" class="input-item">
-					<input type="password" v-model="password_1" placeholder="密码" class="input-item">
+					<input type="text" v-model="username" name="username" placeholder="用户名" class="input-item">
+					<input type="password" v-model="password_1" name="password_1" placeholder="密码" class="input-item">
 					<input type="password" v-model="password_2" placeholder="密码" class="input-item">
-					<input type="text" v-model="phone" placeholder="电话号码" class="input-item">
+					<input type="text" v-model="phone" name="phone" placeholder="电话号码" class="input-item">
 					<button class="btn" type="submit">注册</button>
 				</form>
 			</div>
@@ -29,7 +29,7 @@ import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 
 export default {
-	name: 'Register',
+	name: 'register',
 	setup() {
 		const username = ref('');
 		const password_1 = ref('');
@@ -53,8 +53,8 @@ export default {
 					axios
 						.get(`/api/register`, {
 							params: {
-								userName: username.value,//用户名
-								userPassword: password_1.value,//密码
+								username: username.value,//用户名
+								userpassword: password_1.value,//密码
 								phone: phone.value//电话号码
 							}
 						}
