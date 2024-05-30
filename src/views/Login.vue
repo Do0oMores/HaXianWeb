@@ -46,7 +46,7 @@
 	  if (response.data.code === 0) {
 		ElMessage.success(response.data.msg);
 		setTimeout(() => {
-		  GlobalVar.userName = userName.value;
+		  GlobalVar.username = userName.value;
 		  router.push('/admin');
 		}, 1000);
 	  } else {
