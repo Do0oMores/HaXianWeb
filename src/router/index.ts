@@ -16,6 +16,10 @@ const router = createRouter({
         {
             path: '/admin',
             name: 'adminRouter',
+            meta:{
+                requireAuth: true,
+                roles:['admin']
+            },
             component: () => import('../views/Admin.vue'),
             children: [
                 {
@@ -67,5 +71,24 @@ const router = createRouter({
         }
     ]
 })
+
+//检查登录状态
+router.beforeEach((to, from, next) => {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+
+    if (to.matched.some(record => record.meta.requireAuth)) {
+        if (!isLoggedIn) {
+            next({
+                path: '/login',
+                //保存想要访问的地址，登录后再重定向过去
+                query: { redirect: to.fullPath ,message:'您还未登录!'}    
+            });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router

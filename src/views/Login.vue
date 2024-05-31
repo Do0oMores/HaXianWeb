@@ -6,8 +6,8 @@
 				<form @submit.prevent="fetchData">
 					<input v-model="userName" type="text" name="userName" id="userName" placeholder="账号"
 						class="input-item">
-					<input v-model="userPassword" type="userPassword" name="userPassword" id="userPassword"
-						placeholder="密码" class="input-item">
+					<input v-model="userPassword" type="password" name="userPassword" id="userPassword" placeholder="密码"
+						class="input-item">
 					<button class="loginButton" id="loginButton" type="submit">登录</button>
 				</form>
 			</div>
@@ -50,6 +50,7 @@ const fetchData = async () => {
 			const data = response.data;
 			if (data.code === 200) {
 				ElMessage.success(data.msg);
+				sessionStorage.setItem('isLoggedIn', 'true');
 				setTimeout(() => {
 					GlobalVar.username = userName.value;
 					if (data.role === "admin") {

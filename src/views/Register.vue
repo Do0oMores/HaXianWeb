@@ -6,7 +6,7 @@
 				<form @submit.prevent="fetchData">
 					<input type="text" v-model="username" name="username" placeholder="用户名" class="input-item">
 					<input type="password" v-model="password_1" name="password_1" placeholder="密码" class="input-item">
-					<input type="password" v-model="password_2" placeholder="密码" class="input-item">
+					<input type="password" v-model="password_2" placeholder="重复密码" class="input-item">
 					<input type="text" v-model="phone" name="phone" placeholder="电话号码" class="input-item">
 					<button class="btn" type="submit">注册</button>
 				</form>
