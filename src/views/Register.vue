@@ -61,7 +61,8 @@ export default {
 						)
 						.then((response) => {
 							console.log(response.data);
-							if (response.data.code === 0) {
+							//处理后端响应
+							if (response.data.code === 200) {
 								ElMessage.success(response.data.msg);
 								setTimeout(() => {
 									router.push('/login');
