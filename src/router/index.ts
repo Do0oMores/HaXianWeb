@@ -25,17 +25,17 @@ const router = createRouter({
                 {
                     path: '',
                     name: 'home',
-                    component: () => import('../components/SelectBill.vue')
+                    component: () => import('../components/SelectUser.vue')
                 },
                 {
                     path: 'selectbill',
                     name: 'selectbill',
-                    component: () => import('../components/SelectBill.vue')
+                    component: () => import('../components/SelectUser.vue')
                 },
                 {
                     path: 'selectresidue',
                     name: 'selectresidue',
-                    component: () => import('../components/SelectResidue.vue')
+                    component: () => import('../components/SelectCommodity.vue')
                 },
                 {
                     path: 'printconsumptionorders',

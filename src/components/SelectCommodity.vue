@@ -4,7 +4,7 @@
             <el-form class="select-div">
                 <h1 class="title">查询商品信息</h1>
                 <el-form-item label="">
-                    <el-input type="text" v-model="username" placeholder="预查询商品" autocomplete="off"></el-input>
+                    <el-input type="text" v-model="productName" placeholder="预查询商品" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" style="width:100%;" @click="fetchData()">
@@ -15,16 +15,19 @@
         </div>
         <div v-if="!isSelected">
             <el-button type="primary" style="width:100%;" @click="back()">
-                当前查询的商品是 [{{ username }}] 点击返回重新查询其他商品
+                当前查询的商品是 [{{ productName }}] 点击返回重新查询其他商品
             </el-button>
             <el-table :data="tableData" stripe style="width: 100%">
-                <el-table-column prop="PackageUsageID" label="PackageUsageID" width="180" />
-                <el-table-column prop="UserID" label="UserID" width="180" />
-                <el-table-column prop="PackageID" label="PackageID" />
-                <el-table-column prop="RemainingData" label="RemainingData" />
-                <el-table-column prop="RemainingMinutes" label="RemainingMinutes" />
-                <el-table-column prop="RemainingMessages" label="RemainingMessages" />
-                <el-table-column prop="LastUpdated" label="LastUpdated" />
+                <el-table-column prop="product_id" label="商品ID" width="180" />
+                <el-table-column prop="name" label="商品名" width="180" />
+                <el-table-column prop="description" label="描述信息" />
+                <el-table-column prop="price" label="单价" />
+                <el-table-column prop="stock" label="库存量" />
+                <el-table-column prop="origin" label="来源地" />
+                <el-table-column prop="production_date" label="生产日期" />
+                <el-table-column prop="support" label="制造商"/>
+                <el-table-column prop="create_time" label="入库时间" />
+                <el-table-column prop="shelf_life" label="保质期(天)" />
             </el-table>
         </div>
     </div>
@@ -37,24 +40,24 @@ export default {
     data: function () {
         return {
             isSelected: true,
-            username: "",
+            productName: "",
             tableData: []
         }
     },
     methods: {
         fetchData() {
             // 用户名中不能有空格
-            this.username = this.username.split(/[\t\r\f\n\s]*/g).join('');
+            this.productName = this.productName.split(/[\t\r\f\n\s]+/g).join('');
             // 判断用户名是否为空
-            if (this.username != "") {
-                axios.get('/api/usage?username=' + this.username).then(response => {
+            if (this.productName != "") {
+                axios.get('/api/products?productName=' + this.productName).then(response => {
                     console.log(response.data);
-                    if (response.data.code == 0) {
+                    if (response.data.code == 200) {
                         ElMessage.success(response.data.msg);
                         this.tableData = response.data.Data;
                         setTimeout(() => {
                             this.isSelected = false;
-                        }, 1000);
+                        }, 500);
                     } else {
                         ElMessage.error(response.data.msg)
                     }
