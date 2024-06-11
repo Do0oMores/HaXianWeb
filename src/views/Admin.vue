@@ -5,7 +5,7 @@
                 <el-menu default-active="1" @select="handleSelect" style="flex: 1;" text-color="#fff"
                     active-text-color="#ffd04b" background-color="#545c64">
                     <h2 style="color: rgb(200, 235, 255); text-align: center; margin-bottom: 15px; margin-top: 10px;">
-                        HaXian管理系统</h2>33
+                        HaXian管理系统</h2>
                     <el-menu-item index="1">
                         <el-icon>
                             <Document />
