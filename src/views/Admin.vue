@@ -42,7 +42,7 @@
                     </el-menu-item>
                     <el-menu-item index="7">
                         <el-icon><icon-menu /></el-icon>
-                        <span>资费说明</span>
+                        <span>预约订单</span>
                     </el-menu-item>
                 </el-menu>
             </el-aside>
@@ -115,7 +115,7 @@ export default {
             else if (key == "6") {
                 this.$router.push('/admin/userrecharge')
             } else if (key == "7") {
-                this.$router.push('/admin/tariffdescription')
+                this.$router.push('/admin/reservation')
             }
         },
         handleCommand(command: string | number | object) {

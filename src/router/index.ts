@@ -14,6 +14,11 @@ const router = createRouter({
             component: () => import('../views/Register.vue')
         },
         {
+            path:"/user",
+            name:"userRouter",
+            component: () => import('../views/UserIndex.vue')
+        },
+        {
             path: '/admin',
             name: 'adminRouter',
             meta:{
@@ -63,9 +68,9 @@ const router = createRouter({
                     component: () => import('../components/UserRecharge.vue')
                 },
                 {
-                    path: 'tariffdescription',
-                    name: 'tariffdescription',
-                    component: () => import('../components/TariffDescription.vue')
+                    path: 'reservation',
+                    name: 'reservation',
+                    component: () => import('../components/Reservation.vue')
                 }
             ]
         }
