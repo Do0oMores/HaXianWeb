@@ -11,10 +11,12 @@
     </div>
     <div>
         <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="BillID" label="BillID" width="180" />
-            <el-table-column prop="BillDate" label="BillDate" width="180" />
-            <el-table-column prop="Amount" label="Amount" />
-            <el-table-column prop="BillType" label="BillType" />
+            <el-table-column prop="order_id" label="订单号" width="180" />
+            <el-table-column prop="user_id" label="用户名" width="180" />
+            <el-table-column prop="product_id" label="商品名" />
+            <el-table-column prop="total_price" label="总价" />
+            <el-table-column prop="order_date" label="下单时间" />
+            <el-table-column prop="status" label="订单状态" />
         </el-table>
     </div>
 </template>
@@ -30,9 +32,9 @@ export default {
     },
     methods: {
         fetchData() {
-            axios.get('/api/details').then(response => {
+            axios.get('/api/orders').then(response => {
                 console.log(response.data);
-                if (response.data.code == 0) {
+                if (response.data.code == 200) {
                     this.tableData = response.data.Data;
                     console.log(this.tableData);
                 } else {
