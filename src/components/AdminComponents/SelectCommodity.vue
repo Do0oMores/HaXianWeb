@@ -28,6 +28,7 @@
                 <el-table-column prop="support" label="制造商" />
                 <el-table-column prop="create_time" label="入库时间" />
                 <el-table-column prop="shelf_life" label="保质期(天)" />
+                <el-table-column prop="type" label="类别" />
             </el-table>
         </div>
     </div>

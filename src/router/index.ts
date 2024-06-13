@@ -14,63 +14,84 @@ const router = createRouter({
             component: () => import('../views/Register.vue')
         },
         {
-            path:"/user",
-            name:"userRouter",
+            path: "/user",
+            name: "userRouter",
             component: () => import('../views/UserIndex.vue')
         },
         {
             path: '/admin',
             name: 'adminRouter',
-            meta:{
+            meta: {
                 requireAuth: true,
-                roles:['admin']
+                roles: ['admin']
             },
             component: () => import('../views/Admin.vue'),
             children: [
                 {
                     path: '',
                     name: 'home',
-                    component: () => import('../components/SelectUser.vue')
+                    component: () => import('../components/AdminComponents/SelectUser.vue')
                 },
                 {
                     path: 'selectbill',
                     name: 'selectbill',
-                    component: () => import('../components/SelectUser.vue')
+                    component: () => import('../components/AdminComponents/SelectUser.vue')
                 },
                 {
                     path: 'selectresidue',
                     name: 'selectresidue',
-                    component: () => import('../components/SelectCommodity.vue')
+                    component: () => import('../components/AdminComponents/SelectCommodity.vue')
                 },
                 {
                     path: 'printconsumptionorders',
                     name: 'printconsumptionorders',
-                    component: () => import('../components/PrintConsumptionOrders.vue')
+                    component: () => import('../components/AdminComponents/PrintConsumptionOrders.vue')
                 },
                 {
                     path: 'changepackage',
                     name: 'changepackage',
-                    component: () => import('../components/ChangePackage.vue')
+                    component: () => import('../components/AdminComponents/ChangePackage.vue')
                 },
                 {
                     path: 'leavenet',
                     name: 'leavenet',
-                    component: () => import('../components/LeaveNet.vue')
+                    component: () => import('../components/AdminComponents/LeaveNet.vue')
                 },
                 {
                     path: 'scenariousage',
                     name: 'scenariousage',
-                    component: () => import('../components/ScenarioUsage.vue')
+                    component: () => import('../components/AdminComponents/ScenarioUsage.vue')
                 },
                 {
                     path: 'userrecharge',
                     name: 'userrecharge',
-                    component: () => import('../components/UserRecharge.vue')
+                    component: () => import('../components/AdminComponents/UserRecharge.vue')
                 },
                 {
                     path: 'reservation',
                     name: 'reservation',
-                    component: () => import('../components/Reservation.vue')
+                    component: () => import('../components/AdminComponents/Reservation.vue')
+                }
+            ]
+        },
+        {
+            path: '/user',
+            name: 'UserRouter',
+            meta: {
+                requireAuth: true,
+                roles: ['user']
+            },
+            component: () => import('../views/UserIndex.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'home',
+                    component: () => import('../components/UserComponents/Commodity.vue')
+                },
+                {
+                    path: 'commodity',
+                    name: 'commodity',
+                    component: () => import('../components/UserComponents/Commodity.vue')
                 }
             ]
         }
@@ -86,7 +107,7 @@ router.beforeEach((to, from, next) => {
             next({
                 path: '/login',
                 //保存想要访问的地址，登录后再重定向过去
-                query: { redirect: to.fullPath ,message:'您还未登录!'}    
+                query: { redirect: to.fullPath, message: '您还未登录!' }
             });
         } else {
             next();
