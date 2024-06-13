@@ -6,6 +6,16 @@
                 <el-form-item label="">
                     <el-input type="text" v-model="productName" placeholder="预查询商品" autocomplete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="">
+                    <el-select v-model="selectedCategory" placeholder="选择类别">
+                        <el-option
+                          v-for="item in categories"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" style="width:100%;" @click="fetchData()">
                         查询
@@ -42,14 +52,18 @@ export default {
         return {
             isSelected: true,
             productName: "",
-            tableData: []
+            tableData: [],
+            selectedCategory: '',
+            categories: [
+                { value: 'fruit', label: '水果' },
+                { value: 'vegetable', label: '蔬菜' },
+                { value: 'meat', label: '肉类' },
+            ]
         }
     },
     methods: {
         fetchData() {
-            // 用户名中不能有空格
             this.productName = this.productName.split(/[\t\r\f\n\s]+/g).join('');
-            // 判断用户名是否为空
             if (this.productName != "") {
                 axios.get('/api/products?productName=' + this.productName).then(response => {
                     console.log(response.data);

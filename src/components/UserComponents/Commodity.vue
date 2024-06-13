@@ -2,69 +2,125 @@
   <el-main>
     <div class="products">
       <div class="product" v-for="product in products" :key="product.id">
-        <img :src="product.image" :alt="product.alt" />
+        <img :src="product.image" />
         <p>{{ product.name }}</p>
+        <p>{{ product.description }}</p>
+        <p class="price">${{ product.price }}</p>
+        <button @click="addToCart(product.id)">加入购物车</button>
       </div>
     </div>
   </el-main>
 </template>
 
 <script>
+import axios from 'axios';
+import { ElMessage } from 'element-plus';
+
 export default {
   data() {
     return {
-      products: [
-        { id: 1, image: 'https://img.picui.cn/free/2024/06/12/6668f6551c813.jpg', alt: 'Product 1', name: '海南荔枝' },
-      ]
-    }
-  }
-}
+      products: [],
+    };
+  },
+  created() {
+    this.fetchProducts();
+  },
+  methods: {
+    async fetchProducts() {
+      try {
+        const response = await axios.get('/api/commodity');
+        if (response.data.code == 200) {
+          this.products = response.data.Data;
+          ElMessage.success(response.data.msg)
+        }
+      } catch (error) {
+        ElMessage.error(response.data.msg)
+      }
+    },
+    async addToCart(productId) {
+      try {
+        const response1 = await axios.get('/api/addToCart', {
+          params: {
+            productId: productId
+          }
+        });
+        if (response1.data.code == 200) {
+          
+        }
+      } catch (error) {
+        ElMessage.error(response1.data.msg);
+      }
+    },
+  },
+};
 </script>
 
-<style>
-.el-main {
-  padding: auto
-}
-
+<style scoped>
 .products {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
-  padding: 20px;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .product {
-  width: 200px;
-  margin: 25px;
-  padding: 10px;
-  background-color: #333;
-  color: #fff;
+  background-color: #23b9b9;
+  border: 1px solid #2d502d;
+  border-radius: 8px;
+  padding: 20px;
+  width: 30%;
+  box-sizing: border-box;
   text-align: center;
-  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .product img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  display: block;
-  margin: 10px 0;
+  border-radius: 8px;
 }
 
 .product p {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  transform: translateY(100%);
-  transition: transform 0.3s ease-in-out;
+  margin: 10px 0;
 }
 
-.product:hover p {
-  transform: translateY(0);
+.product p:first-of-type {
+  font-weight: bold;
+  /* 商品名称加粗 */
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  /* 鼠标悬停时上移 */
+}
+
+.product .price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #e74c3c;
+  /* 价格的颜色 */
+}
+
+.product button {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* 添加按钮阴影 */
+}
+
+.product button:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+  /* 按钮悬停时的渐变背景颜色 */
+  transform: translateY(-3px);
+  /* 鼠标悬停时上移 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  /* 按钮悬停时的阴影效果 */
 }
 </style>

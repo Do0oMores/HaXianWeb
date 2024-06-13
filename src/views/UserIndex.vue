@@ -16,7 +16,7 @@
             <el-icon>
               <Location />
             </el-icon>
-            <span>生鲜商品管理</span>
+            <span>购物车</span>
           </el-menu-item>
           <el-menu-item index="3">
             <el-icon>
@@ -27,22 +27,6 @@
           <el-menu-item index="4">
             <el-icon><icon-menu /></el-icon>
             <span>更换套餐</span>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <el-icon>
-              <Document />
-            </el-icon>
-            <span>办理退网</span>
-          </el-menu-item>
-          <el-menu-item index="6">
-            <el-icon>
-              <Setting />
-            </el-icon>
-            <span>用户充值</span>
-          </el-menu-item>
-          <el-menu-item index="7">
-            <el-icon><icon-menu /></el-icon>
-            <span>预约订单</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -57,11 +41,11 @@
 <script>
 import global from '@/stores/global';
 import {
-    Document,
-    Menu as IconMenu,
-    Location,
-    Setting,
-    ArrowDown
+  Document,
+  Menu as IconMenu,
+  Location,
+  Setting,
+  ArrowDown
 } from '@element-plus/icons-vue'
 
 export default {
@@ -78,23 +62,16 @@ export default {
     }
   },
   methods: {
-    handleSelect(key,keyPath) {
+    handleSelect(key, keyPath) {
       // console.log(key, keyPath)
       if (key == "1") {
         this.$router.push('/user/commodity')
       } else if (key == "2") {
-        this.$router.push('/admin/selectresidue')
+        this.$router.push('/user/shoppingcart')
       } else if (key == "3") {
         this.$router.push('/admin/printconsumptionorders')
       } else if (key == "4") {
         this.$router.push('/admin/changepackage')
-      } else if (key == "5") {
-        this.$router.push('/admin/leavenet')
-      }
-      else if (key == "6") {
-        this.$router.push('/admin/userrecharge')
-      } else if (key == "7") {
-        this.$router.push('/admin/reservation')
       }
     }
   }
@@ -112,47 +89,5 @@ body {
 
 .el-main {
   padding: auto
-}
-
-.products {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 20px;
-}
-
-.product {
-  width: 200px;
-  margin: 25px;
-  padding: 10px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  position: relative;
-}
-
-.product img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 10px 0;
-}
-
-.product p {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  transform: translateY(100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-.product:hover p {
-  transform: translateY(0);
 }
 </style>
