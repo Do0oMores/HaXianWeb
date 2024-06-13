@@ -134,4 +134,12 @@ export default {
 .flex-grow {
     flex-grow: 1;
 }
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url("../pic/UserIndexBackgroundImage/index3.jpg");
+  background-size: cover;
+}
 </style>
