@@ -1,12 +1,12 @@
 <template>
   <el-main>
     <div class="products">
-      <div class="product" v-for="product in products" :key="product.id">
+      <div class="product" v-for="product in products" :key="product.product_id">
         <img :src="product.image" />
         <p>{{ product.name }}</p>
         <p>{{ product.description }}</p>
         <p class="price">${{ product.price }}</p>
-        <button @click="addToCart(product.id)">加入购物车</button>
+        <button @click="addToCart(product.product_id)">加入购物车</button>
       </div>
     </div>
   </el-main>
@@ -20,10 +20,12 @@ export default {
   data() {
     return {
       products: [],
+      userId: null,
     };
   },
   created() {
     this.fetchProducts();
+    this.userId = this.getUserId();
   },
   methods: {
     async fetchProducts() {
@@ -38,19 +40,31 @@ export default {
       }
     },
     async addToCart(productId) {
+      if (!this.userId) {
+        ElMessage.error('您还未登录!');
+        return;
+      }
       try {
-        const response1 = await axios.get('/api/addToCart', {
+        const response = await axios.get('/api/add-to-cart', {
           params: {
-            productId: productId
+            userId: this.userId,
+            productID: productId,
+            quantity: 1
           }
         });
-        if (response1.data.code == 200) {
-          
+        if (response.data.code == 200) {
+          ElMessage.success(response.data.msg);
+        } else {
+          ElMessage.error(response.data.msg);
         }
       } catch (error) {
-        ElMessage.error(response1.data.msg);
+        console.log(error);
+        ElMessage.error('添加到购物车失败!');
       }
     },
+    getUserId() {
+      return sessionStorage.getItem('userID') || null;
+    }
   },
 };
 </script>

@@ -24,14 +24,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRouter,useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import GlobalVar from "../stores/global";
 
 const router = useRouter();
 const userName = ref('');
-const route=useRoute();
+const route = useRoute();
 const userPassword = ref('');
 
 const gotoRegister = () => {
@@ -39,8 +39,8 @@ const gotoRegister = () => {
 };
 
 //跳转失败提示信息
-onMounted(()=>{
-	if(route.query.message){
+onMounted(() => {
+	if (route.query.message) {
 		ElMessage.error(route.query.message as string);
 	}
 });
@@ -59,6 +59,8 @@ const fetchData = async () => {
 			if (data.code === 200) {
 				ElMessage.success(data.msg);
 				sessionStorage.setItem('isLoggedIn', 'true');
+				sessionStorage.setItem('userID',data.userID);
+				console.log(data.userID);
 				setTimeout(() => {
 					GlobalVar.username = userName.value;
 					if (data.role === "admin") {
