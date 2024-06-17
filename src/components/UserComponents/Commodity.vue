@@ -48,7 +48,7 @@ export default {
         const response = await axios.get('/api/add-to-cart', {
           params: {
             userId: this.userId,
-            productID: productId,
+            productId: productId,
             quantity: 1
           }
         });
