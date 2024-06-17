@@ -26,7 +26,7 @@
           </el-menu-item>
           <el-menu-item index="4">
             <el-icon><icon-menu /></el-icon>
-            <span>更换套餐</span>
+            <span>查询商品溯源</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -60,6 +60,9 @@ export default {
     return {
       Username: global.username,
     }
+  },
+  created() {
+    this.$router.push('user/commodity')
   },
   methods: {
     handleSelect(key, keyPath) {
