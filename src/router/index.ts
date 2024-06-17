@@ -97,6 +97,11 @@ const router = createRouter({
                     path: 'shoppingcart',
                     name: 'shoppingcart',
                     component: () => import('../components/UserComponents/ShoppingCart.vue')
+                },
+                {
+                    path: 'commodityorigin',
+                    name: 'commodityorigin',
+                    component: () => import('../components/UserComponents/CommodityOrigin.vue')
                 }
             ]
         }

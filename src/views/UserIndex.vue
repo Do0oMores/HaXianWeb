@@ -74,7 +74,7 @@ export default {
       } else if (key == "3") {
         this.$router.push('/admin/printconsumptionorders')
       } else if (key == "4") {
-        this.$router.push('/admin/changepackage')
+        this.$router.push('/user/commodityorigin')
       }
     }
   }
