@@ -33,6 +33,7 @@ export default {
         const response = await axios.get('/api/commodity');
         if (response.data.code == 200) {
           this.products = response.data.Data;
+          console.log(response.data.Data);
         }
       } catch (error) {
         ElMessage.error(response.data.msg)

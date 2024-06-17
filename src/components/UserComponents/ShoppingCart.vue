@@ -7,9 +7,11 @@
                 <p class="price">单价：${{ product.unitPrice }}</p>
                 <p class="total-price">总价：${{ product.totalPrice }}</p>
                 <div class="quantity-control">
-                    <el-button @click="decreaseQuantity(product)" size="mini">-</el-button>
+                    <el-button class="custom-button" @click="decreaseQuantity(product.productID)"
+                        size="mini">-</el-button>
                     <span>{{ product.quantity }}</span>
-                    <el-button @click="increaseQuantity(product)" size="mini">+</el-button>
+                    <el-button class="custom-button" @click="increaseQuantity(product.productID)"
+                        size="mini">+</el-button>
                 </div>
             </div>
         </div>
@@ -49,8 +51,7 @@ export default {
                 });
                 if (response.data.code === 200) {
                     this.products = response.data.Data.items;
-                    this.totalCartPrice=response.data.Data.totalCartPrice;
-                    console.log(response.data.Data);
+                    this.totalCartPrice = response.data.Data.totalCartPrice;
                 } else {
                     ElMessage.error(response.data.msg);
                 }
@@ -60,6 +61,60 @@ export default {
         },
         getUserId() {
             return sessionStorage.getItem('userID') || null;
+        },
+        async decreaseQuantity(product_id) {
+            try {
+                const response = await axios.get('/api/remove-from-cart', {
+                    params: {
+                        userId: this.userId,
+                        productId: product_id,
+                        quantity: 1
+                    }
+                });
+                if (response.data.code === 200) {
+                    const product = this.products.find(p => p.productID === product_id);
+                    if (product && product.quantity > 0) {
+                        product.quantity -= 1;
+                        product.totalPrice = (product.unitPrice * product.quantity).toFixed(2);
+                        this.totalCartPrice = this.calculateTotalCartPrice();
+                    }
+                    if (product.quantity === 0) {
+                        this.products = this.products.filter(p => p.productID !== product_id);
+                    }
+                    ElMessage.success(response.data.msg);
+                } else {
+                    ElMessage.error(response.data.msg);
+                }
+            } catch (error) {
+                ElMessage.error('获取信息失败，请稍后再试');
+            }
+        },
+        async increaseQuantity(product_id) {
+            try {
+                const response = await axios.get('/api/add-to-cart', {
+                    params: {
+                        userId: this.userId,
+                        productId: product_id,
+                        quantity: 1
+                    }
+                });
+                if (response.data.code === 200) {
+                    const product = this.products.find(p => p.productID === product_id);
+                    if (product) {
+                        product.quantity += 1;
+                        product.totalPrice = (product.unitPrice * product.quantity).toFixed(2);
+                        this.totalCartPrice = this.calculateTotalCartPrice();
+                    }
+                    ElMessage.success(response.data.msg);
+                } else {
+                    ElMessage.error(response.data.msg);
+                }
+            } catch (error) {
+                ElMessage.error('获取信息失败，请稍后再试');
+            }
+        },
+        calculateTotalCartPrice() {
+            return this.products.reduce((total, product) => total + parseFloat(product.totalPrice), 0).toFixed(2);
         }
     }
 }
@@ -112,6 +167,21 @@ export default {
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+.custom-button {
+    background-color: #50dcff;
+    border-color: #2778a4;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.custom-button:hover {
+    background-color: #47ffff;
+    border-color: #288da7;
+    transform: scale(1.1);
 }
 
 .total-cart-price {
