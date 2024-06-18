@@ -17,6 +17,7 @@
         </div>
         <div class="total-cart-price">
             <p>购物车总价：${{ totalCartPrice }}</p>
+            <el-button class="submit-button" @click="submitPrice()">结账</el-button>
         </div>
     </el-main>
 </template>
@@ -189,5 +190,24 @@ export default {
     font-size: 1.5em;
     font-weight: bold;
     text-align: center;
+}
+
+.submit-button {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* 添加按钮阴影 */
+}
+
+.submit-button:hover {
+    background: linear-gradient(90deg, #097ab3, #0b89c7);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 </style>
