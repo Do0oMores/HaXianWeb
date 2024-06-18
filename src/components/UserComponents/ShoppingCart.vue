@@ -1,5 +1,5 @@
 <template>
-    <el-main>
+    <el-main v-if="isSelected">
         <div class="shoppingcart">
             <div class="aproduct" v-for="product in products" :key="product.productName">
                 <!-- <img :src="product.productName" /> -->
@@ -17,9 +17,23 @@
         </div>
         <div class="total-cart-price">
             <p>购物车总价：${{ totalCartPrice }}</p>
-            <el-button class="submit-button" @click="submitPrice()">结账</el-button>
+            <el-button class="submit-button" @click="createOrder()">结账</el-button>
         </div>
     </el-main>
+    <div v-if="!isSelected">
+        <el-button type="primary" style="width:100%;" @click="checkout()">
+            订单总金额 [{{ totalCartPrice }}] 点击结账
+        </el-button>
+        <el-button type="primary" style="width:100%;" @click="back()">
+            点击返回
+        </el-button>
+        <el-table :data="tableData" stripe style="width: 100%">
+            <el-table-column prop="product_id" label="商品名" width="180" />
+            <el-table-column prop="price" label="单价" width="180" />
+            <el-table-column prop="amount" label="数量" />
+            <el-table-column prop="total_price" label="总价" />
+        </el-table>
+    </div>
 </template>
 
 <script>
@@ -32,6 +46,8 @@ export default {
             products: [],
             totalCartPrice: 0,
             userId: null,
+            isSelected: true,
+            tableData: []
         };
     },
     created() {
@@ -116,6 +132,57 @@ export default {
         },
         calculateTotalCartPrice() {
             return this.products.reduce((total, product) => total + parseFloat(product.totalPrice), 0).toFixed(2);
+        },
+        async createOrder() {
+            try {
+                const response = await axios.get('/api/create-order', {
+                    params: {
+                        UserID: this.userId
+                    }
+                });
+                if (response.data.code === 200) {
+                    ElMessage.success(response.data.msg);
+                    this.tableData = response.data.Data;
+                    setTimeout(() => {
+                        this.isSelected = false;
+                    }, 500);
+                } else {
+                    ElMessage.error(response.data.msg);
+                }
+            } catch (error) {
+                ElMessage.error('服务器错误，请稍后再试');
+            }
+        },
+        async checkout() {
+            try {
+                const response = await axios.get('/api/checkout', {
+                    params: {
+                        UserID: this.userId
+                    }
+                });
+                if (response.data.code === 200) {
+                    ElMessage.success(response.data.msg);
+                } else {
+                    ElMessage.error(response.data.msg);
+                }
+            } catch (error) {
+                ElMessage.error('服务器错误，请稍后再试');
+            }
+        },
+        async back() {
+            try {
+                const response = await axios.get('/api/cleanorders', {
+                    params: {
+                        userID: this.userId
+                    }
+                });
+                if (!response.data.code === 200) {
+                    ElMessage.error(response.data.msg);
+                }
+            } catch (error) {
+                ElMessage.error('服务器错误，请稍后再试')
+            }
+            this.isSelected = true
         }
     }
 }

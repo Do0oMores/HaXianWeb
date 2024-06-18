@@ -6,7 +6,7 @@
                 <el-form-item label="">
                     <el-input type="text" v-model="productName" placeholder="预查询商品" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="">
+                <!-- <el-form-item label="">
                     <el-select v-model="selectedCategory" placeholder="选择类别">
                         <el-option
                           v-for="item in categories"
@@ -15,7 +15,7 @@
                           :value="item.value">
                         </el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item>
                     <el-button type="primary" style="width:100%;" @click="fetchData()">
                         查询
@@ -53,12 +53,12 @@ export default {
             isSelected: true,
             productName: "",
             tableData: [],
-            selectedCategory: '',
-            categories: [
-                { value: 'fruit', label: '水果' },
-                { value: 'vegetable', label: '蔬菜' },
-                { value: 'meat', label: '肉类' },
-            ]
+            // selectedCategory: '',
+            // categories: [
+            //     { value: 'fruit', label: '水果' },
+            //     { value: 'vegetable', label: '蔬菜' },
+            //     { value: 'meat', label: '肉类' },
+            // ]
         }
     },
     methods: {
