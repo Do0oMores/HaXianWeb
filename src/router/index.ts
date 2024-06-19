@@ -48,26 +48,6 @@ const router = createRouter({
                     component: () => import('../components/AdminComponents/PrintConsumptionOrders.vue')
                 },
                 {
-                    path: 'changepackage',
-                    name: 'changepackage',
-                    component: () => import('../components/AdminComponents/ChangePackage.vue')
-                },
-                {
-                    path: 'leavenet',
-                    name: 'leavenet',
-                    component: () => import('../components/AdminComponents/LeaveNet.vue')
-                },
-                {
-                    path: 'scenariousage',
-                    name: 'scenariousage',
-                    component: () => import('../components/AdminComponents/ScenarioUsage.vue')
-                },
-                {
-                    path: 'userrecharge',
-                    name: 'userrecharge',
-                    component: () => import('../components/AdminComponents/UserRecharge.vue')
-                },
-                {
                     path: 'reservation',
                     name: 'reservation',
                     component: () => import('../components/AdminComponents/Reservation.vue')

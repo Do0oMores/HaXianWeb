@@ -26,22 +26,6 @@
                     </el-menu-item>
                     <el-menu-item index="4">
                         <el-icon><icon-menu /></el-icon>
-                        <span>更换套餐</span>
-                    </el-menu-item>
-                    <el-menu-item index="5">
-                        <el-icon>
-                            <Document />
-                        </el-icon>
-                        <span>办理退网</span>
-                    </el-menu-item>
-                    <el-menu-item index="6">
-                        <el-icon>
-                            <Setting />
-                        </el-icon>
-                        <span>用户充值</span>
-                    </el-menu-item>
-                    <el-menu-item index="7">
-                        <el-icon><icon-menu /></el-icon>
                         <span>预约订单</span>
                     </el-menu-item>
                 </el-menu>
@@ -59,7 +43,6 @@
                             <template #dropdown>
                                 <el-dropdown-menu>
                                     <el-dropdown-item command="quit">退出系统</el-dropdown-item>
-                                    <!-- disabled divided -->
                                 </el-dropdown-menu>
                             </template>
                         </el-dropdown>
@@ -108,13 +91,6 @@ export default {
             } else if (key == "3") {
                 this.$router.push('/admin/printconsumptionorders')
             } else if (key == "4") {
-                this.$router.push('/admin/changepackage')
-            } else if (key == "5") {
-                this.$router.push('/admin/leavenet')
-            }
-            else if (key == "6") {
-                this.$router.push('/admin/userrecharge')
-            } else if (key == "7") {
                 this.$router.push('/admin/reservation')
             }
         },
