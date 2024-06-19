@@ -1,26 +1,54 @@
 <template>
     <el-main>
         <div class="shoppingcart">
-            <div class="aproduct" v-for="product in products" :key="product.productName">
-                <!-- <img :src="product.productName" /> -->
-                <p>{{ product.productName }}</p>
-                <p class="price">单价：${{ product.unitPrice }}</p>
-                <p class="total-price">总价：${{ product.totalPrice }}</p>
+            <div class="aproduct" v-for="reservation in reservations" :key="reservation.productName">
+                <p>{{ reservation.productName }}</p>
+                <p class="price">单价：${{ reservation.price }}</p>
+                <p class="total-price">预约数量：{{ reservation.amount }}</p>
+                <p class="status">状态：{{ reservation.status }}</p>
             </div>
         </div>
     </el-main>
 </template>
 <script>
+import axios from 'axios';
 import { ElMessage } from 'element-plus';
 
 export default {
     data() {
         return {
-            products: []
+            reservations: [],
+            userId: null
         };
     },
-    methods:{
-
+    created() {
+        this.userId = this.getUserId();
+        if (this.userId) {
+            this.fetchData();
+        } else {
+            ElMessage.error('请先登录');
+        }
+    },
+    methods: {
+        getUserId() {
+            return sessionStorage.getItem('userID') || null;
+        },
+        async fetchData() {
+            try {
+                const response = await axios.get('/api/get-user-reservation', {
+                    params: {
+                        userID: this.userId
+                    }
+                });
+                if(response.data.code===200){
+                    this.reservations=response.data.Data
+                }else{
+                    ElMessage.error(response.data.msg);
+                }
+            } catch (error) {
+                ElMessage.error("服务器错误，请稍后再试")
+            }
+        }
     }
 }
 
