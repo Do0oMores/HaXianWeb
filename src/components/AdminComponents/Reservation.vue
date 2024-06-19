@@ -17,6 +17,11 @@
             <el-table-column prop="amount" label="预约数量" />
             <el-table-column prop="date" label="预约时间" />
             <el-table-column prop="status" label="预约状态" />
+            <el-table-column label="操作" width="180">
+                <template #default="scope">
+                    <el-button type="primary" @click="changeStatus(scope.row)">更改状态</el-button>
+                </template>
+            </el-table-column>
         </el-table>
     </div>
 </template>
@@ -24,8 +29,9 @@
 <script lang="ts">
 import axios from 'axios';
 import { ElMessage } from "element-plus";
+
 export default {
-    data: function () {
+    data() {
         return {
             tableData: []
         }
@@ -33,16 +39,33 @@ export default {
     methods: {
         fetchData() {
             axios.get('/api/reservation').then(response => {
-                //console.log(response.data);
                 if (response.data.code == 200) {
                     this.tableData = response.data.Data;
-                    ElMessage.success(response.data.msg)
-                    console.log(this.tableData);
+                    ElMessage.success(response.data.msg);
                 } else {
-                    ElMessage.error(response.data.msg)
+                    ElMessage.error(response.data.msg);
                 }
             }).catch(error => {
                 console.log(error);
+                ElMessage.error("请求失败");
+            });
+        },
+        changeStatus(row: any) {
+            axios.get('/api/update-reservation-status', {
+                params: {
+                    reservation_id: row.reservation_id,
+                    status: row.status
+                }
+            }).then(response => {
+                if (response.data.code == 200) {
+                    ElMessage.success(response.data.msg);
+                    row.status = response.data.status;
+                } else {
+                    ElMessage.error(response.data.msg);
+                }
+            }).catch(error => {
+                console.log(error);
+                ElMessage.error("请求失败");
             });
         }
     }
