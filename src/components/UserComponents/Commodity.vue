@@ -7,6 +7,7 @@
         <p>{{ product.description }}</p>
         <p class="price">${{ product.price }}</p>
         <button @click="addToCart(product.product_id)">加入购物车</button>
+        <button @click="Reservation(product.product_id)">预约</button>
       </div>
     </div>
   </el-main>
@@ -64,6 +65,28 @@ export default {
     },
     getUserId() {
       return sessionStorage.getItem('userID') || null;
+    },
+    async Reservation(product_id) {
+      if (!this.userId) {
+        ElMessage.error('您还未登录');
+        return;
+      }
+      try {
+        const response = await axios.get('/api/add-reservation', {
+          params: {
+            userID: this.userId,
+            productID: product_id,
+            amount: 1
+          }
+        });
+        if (response.data.code === 200) {
+          ElMessage.success(response.data.msg);
+        } else {
+          ElMessage.error(response.data.msg);
+        }
+      } catch (error) {
+        ElMessage.error('添加到预约失败')
+      }
     }
   },
 };

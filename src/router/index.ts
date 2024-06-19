@@ -102,6 +102,11 @@ const router = createRouter({
                     path: 'commodityorigin',
                     name: 'commodityorigin',
                     component: () => import('../components/UserComponents/CommodityOrigin.vue')
+                },
+                {
+                    path: 'userreservation',
+                    name: 'userreservation',
+                    component: () => import('../components/UserComponents/UserReservation.vue')
                 }
             ]
         }

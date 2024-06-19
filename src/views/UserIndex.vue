@@ -22,7 +22,7 @@
             <el-icon>
               <Setting />
             </el-icon>
-            <span>订单管理</span>
+            <span>预约</span>
           </el-menu-item>
           <el-menu-item index="4">
             <el-icon><icon-menu /></el-icon>
@@ -72,7 +72,7 @@ export default {
       } else if (key == "2") {
         this.$router.push('/user/shoppingcart')
       } else if (key == "3") {
-        this.$router.push('/admin/printconsumptionorders')
+        this.$router.push('/user/userreservation')
       } else if (key == "4") {
         this.$router.push('/user/commodityorigin')
       }
