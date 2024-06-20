@@ -11,6 +11,15 @@
                 </el-button>
             </el-form-item>
         </el-form>
+        <div>
+            <el-table :data="usertableData" stripe style="width: 100%">
+                <el-table-column prop="user_id" label="订单号" width="180" />
+                <el-table-column prop="user_name" label="用户名" width="180" />
+                <el-table-column prop="phone" label="电话" />
+                <el-table-column prop="is_admin" label="是否为管理员" />
+                <el-table-column prop="register_date" label="注册日期" />
+            </el-table>
+        </div>
     </div>
     <div v-if="!isSelected">
         <el-button type="primary" style="width:100%;" @click="back()">
@@ -79,8 +88,12 @@ export default {
             isSelected: true,
             username: "",
             tableData: [] as TableData[],
-            editIndex: -1
+            editIndex: -1,
+            usertableData: [],
         };
+    },
+    created() {
+        this.fetchUsers();
     },
     methods: {
         fetchData() {
@@ -136,6 +149,18 @@ export default {
                 console.log(error);
                 ElMessage.error("请求失败");
             });
+        },
+        async fetchUsers() {
+            try{
+                const response=await axios.get("/api/fetch-users");
+                if(response.data.code===200){
+                    this.usertableData=response.data.Data;
+                }else{
+                    ElMessage.error(response.data.msg);
+                }
+            }catch(error){
+                ElMessage.error("服务器错误，请稍后再试")
+            }
         }
     }
 }

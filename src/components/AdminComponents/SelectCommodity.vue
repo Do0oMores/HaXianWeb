@@ -119,7 +119,7 @@ export default {
             isSelected: true,
             productName: "",
             tableData: [] as TableData[],
-            editIndex: -1 // 新增：编辑模式的索引
+            editIndex: -1
         };
     },
     methods: {
