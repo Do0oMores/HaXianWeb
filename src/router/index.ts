@@ -87,6 +87,11 @@ const router = createRouter({
                     path: 'userreservation',
                     name: 'userreservation',
                     component: () => import('../components/UserComponents/UserReservation.vue')
+                },
+                {
+                    path:'userinformation',
+                    name:'userinformation',
+                    component:()=>import('../components/UserComponents/UserInformation.vue')
                 }
             ]
         }
