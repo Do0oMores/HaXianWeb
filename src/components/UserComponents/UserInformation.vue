@@ -72,10 +72,26 @@ export default {
         editRow(index) {
             this.editIndex = index;
         },
-        saveRow(index) {
+        async saveRow() {
+            try{
+                const response=await axios.get('/api/edit-user',{
+                    params:{
+                        userName:this.tableData.name,
+                        userPhone:this.tableData.phone,
+                        userPwd:this.tableData.pwd,
+                        userID: this.userId
+                    }
+                });
+                if(response.data.code===200){
+                    ElMessage.success(response.data.msg)
+                }else{
+                    ElMessage.error(response.data.msg)
+                }
+            }catch(error){
+                ElMessage.error('服务器错误，请稍后再试')
+            }
             this.editIndex = -1;
-            // 可以在这里处理保存逻辑，例如调用 API 保存数据
-            console.log('Saved data:', this.tableData[index]);
+            //console.log('Saved data:', this.tableData);
         },
         getUserId() {
             return sessionStorage.getItem('userID') || null;
