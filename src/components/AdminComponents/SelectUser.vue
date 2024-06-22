@@ -1,7 +1,7 @@
 <template>
     <div v-if="isSelected">
         <el-form class="select-div">
-            <h1 class="title">使用用户名查询用户信息</h1>
+            <h1 class="title">查询和编辑用户信息</h1>
             <el-form-item label="">
                 <el-input type="text" v-model="username" placeholder="预查询用户名" autocomplete="off"></el-input>
             </el-form-item>

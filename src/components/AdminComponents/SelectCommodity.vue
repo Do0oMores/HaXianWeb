@@ -2,7 +2,7 @@
     <div>
         <div v-if="isSelected">
             <el-form class="select-div">
-                <h1 class="title">查询商品信息</h1>
+                <h1 class="title">查询和编辑商品详细信息</h1>
                 <el-form-item label="">
                     <el-input type="text" v-model="productName" placeholder="预查询商品" autocomplete="off"></el-input>
                 </el-form-item>
@@ -12,6 +12,15 @@
                     </el-button>
                 </el-form-item>
             </el-form>
+            <div>
+                <el-table :data="commoditytableData" stripe style="width: 100%">
+                    <el-table-column prop="product_id" label="商品ID" width="180" />
+                    <el-table-column prop="name" label="商品名" width="180" />
+                    <el-table-column prop="description" label="描述信息" />
+                    <el-table-column prop="price" label="单价" />
+                    <el-table-column prop="stock" label="库存量" />
+                </el-table>
+            </div>
         </div>
         <div v-if="!isSelected">
             <el-button type="primary" style="width:100%;" @click="back()">
@@ -20,67 +29,78 @@
             <el-table :data="tableData" stripe style="width: 100%">
                 <el-table-column prop="product_id" label="商品ID" width="180">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.product_id" placeholder="商品ID"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.product_id"
+                            placeholder="商品ID"></el-input>
                         <span v-else>{{ scope.row.product_id }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="name" label="商品名" width="180">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.name" placeholder="商品名"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.name"
+                            placeholder="商品名"></el-input>
                         <span v-else>{{ scope.row.name }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="description" label="描述信息">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.description" placeholder="描述信息"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.description"
+                            placeholder="描述信息"></el-input>
                         <span v-else>{{ scope.row.description }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="price" label="单价">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.price" placeholder="单价"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.price"
+                            placeholder="单价"></el-input>
                         <span v-else>{{ scope.row.price }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="stock" label="库存量">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.stock" placeholder="库存量"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.stock"
+                            placeholder="库存量"></el-input>
                         <span v-else>{{ scope.row.stock }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="origin" label="来源地">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.origin" placeholder="来源地"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.origin"
+                            placeholder="来源地"></el-input>
                         <span v-else>{{ scope.row.origin }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="production_date" label="生产日期">
                     <template #default="scope">
-                        <el-date-picker v-if="editIndex === scope.$index" v-model="scope.row.production_date" type="date" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-if="editIndex === scope.$index" v-model="scope.row.production_date"
+                            type="date" placeholder="选择日期"></el-date-picker>
                         <span v-else>{{ scope.row.production_date }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="support" label="制造商">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.support" placeholder="制造商"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.support"
+                            placeholder="制造商"></el-input>
                         <span v-else>{{ scope.row.support }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="create_time" label="入库时间">
                     <template #default="scope">
-                        <el-date-picker v-if="editIndex === scope.$index" v-model="scope.row.create_time" type="date" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-if="editIndex === scope.$index" v-model="scope.row.create_time" type="date"
+                            placeholder="选择日期"></el-date-picker>
                         <span v-else>{{ scope.row.create_time }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="shelf_life" label="保质期(天)">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.shelf_life" placeholder="保质期"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.shelf_life"
+                            placeholder="保质期"></el-input>
                         <span v-else>{{ scope.row.shelf_life }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="type" label="类别">
                     <template #default="scope">
-                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.type" placeholder="类别"></el-input>
+                        <el-input v-if="editIndex === scope.$index" v-model="scope.row.type"
+                            placeholder="类别"></el-input>
                         <span v-else>{{ scope.row.type }}</span>
                     </template>
                 </el-table-column>
@@ -119,8 +139,12 @@ export default {
             isSelected: true,
             productName: "",
             tableData: [] as TableData[],
-            editIndex: -1
+            editIndex: -1,
+            commoditytableData: []
         };
+    },
+    created() {
+        this.fetchCommodities();
     },
     methods: {
         fetchData() {
@@ -157,7 +181,7 @@ export default {
         saveRow(index: number) {
             const productData = this.tableData[index];
 
-            axios.get('/api/save-product',{
+            axios.get('/api/save-product', {
                 params: {
                     product_id: productData.product_id,
                     name: productData.name,
@@ -184,6 +208,18 @@ export default {
                     console.log(error);
                     ElMessage.error("请求失败");
                 });
+        },
+        async fetchCommodities() {
+            try {
+                const response = await axios.get("/api/fetch-commodities");
+                if (response.data.code === 200) {
+                    this.commoditytableData=response.data.Data;
+                }else{
+                    ElMessage.error(response.data.msg);
+                }
+            }catch(error){
+                ElMessage.error("服务器错误，请稍后再试");
+            }
         }
     }
 }
