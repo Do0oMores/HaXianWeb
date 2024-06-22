@@ -13,8 +13,8 @@
         </el-form>
         <div>
             <el-table :data="usertableData" stripe style="width: 100%">
-                <el-table-column prop="user_id" label="订单号" width="180" />
-                <el-table-column prop="user_name" label="用户名" width="180" />
+                <el-table-column prop="id" label="用户ID" width="180" />
+                <el-table-column prop="name" label="用户名" width="180" />
                 <el-table-column prop="phone" label="电话" />
                 <el-table-column prop="is_admin" label="是否为管理员" />
                 <el-table-column prop="register_date" label="注册日期" />
